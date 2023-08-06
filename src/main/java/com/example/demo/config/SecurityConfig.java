@@ -18,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
@@ -30,22 +31,71 @@ public class SecurityConfig {
         return new UserMapper() {
             @Override
             public UserDTO toDto(User user) {
-                return null;
+                if ( user == null ) {
+                    return null;
+                }
+
+                UserDTO userDTO = new UserDTO();
+
+                userDTO.setId( user.getId() );
+                userDTO.setEmail( user.getEmail() );
+                userDTO.setPassword( user.getPassword() );
+                userDTO.setFullName( user.getFullName() );
+                userDTO.setBirthYear(user.getBirthYear());
+                userDTO.setFirstPhone(user.getFirstPhone());
+                userDTO.setSecondPhone(user.getSecondPhone());
+                userDTO.setCreatedAt(user.getCreatedAt());
+
+                return userDTO;
             }
 
             @Override
             public User toModel(UserDTO userDTO) {
-                return null;
+                if ( userDTO == null ) {
+                    return null;
+                }
+
+                User user = new User();
+
+                user.setId( userDTO.getId() );
+                user.setEmail( userDTO.getEmail() );
+                user.setPassword( userDTO.getPassword() );
+                user.setFullName( userDTO.getFullName() );
+                user.setBirthYear(userDTO.getBirthYear());
+                user.setFirstPhone(userDTO.getFirstPhone());
+                user.setSecondPhone(userDTO.getSecondPhone());
+                user.setCreatedAt(userDTO.getCreatedAt());
+
+
+                return user;
             }
 
             @Override
             public List<UserDTO> toDtoList(List<User> userList) {
-                return null;
+                if ( userList == null ) {
+                    return null;
+                }
+
+                List<UserDTO> list = new ArrayList<UserDTO>( userList.size() );
+                for ( User user : userList ) {
+                    list.add( toDto( user ) );
+                }
+
+                return list;
             }
 
             @Override
             public List<User> toModelList(List<UserDTO> userDTOList) {
-                return null;
+                if ( userDTOList == null ) {
+                    return null;
+                }
+
+                List<User> list = new ArrayList<User>( userDTOList.size() );
+                for ( UserDTO userDTO : userDTOList ) {
+                    list.add( toModel( userDTO ) );
+                }
+
+                return list;
             }
         };
     }
@@ -55,36 +105,85 @@ public class SecurityConfig {
         return new EmployeeMapper() {
             @Override
             public EmployeeDTO toDto(Employee employee) {
-                return null;
+                if ( employee == null ) {
+                    return null;
+                }
+
+                EmployeeDTO employeeDTO = new EmployeeDTO();
+
+                employeeDTO.setId( employee.getId() );
+                employeeDTO.setEmail( employee.getEmail() );
+                employeeDTO.setPassword( employee.getPassword() );
+                employeeDTO.setFullName( employee.getFullName() );
+                employeeDTO.setBirthYear(employee.getBirthYear());
+                employeeDTO.setFirstPhone(employee.getFirstPhone());
+                employeeDTO.setSecondPhone(employee.getSecondPhone());
+                employeeDTO.setCreatedAt(employee.getCreatedAt());
+
+                return employeeDTO;
             }
 
             @Override
             public Employee toModel(EmployeeDTO employeeDTO) {
-                return null;
+                if ( employeeDTO == null ) {
+                    return null;
+                }
+
+                Employee employee = new Employee();
+
+                employee.setId( employeeDTO.getId() );
+                employee.setEmail( employeeDTO.getEmail() );
+                employee.setPassword( employeeDTO.getPassword() );
+                employee.setFullName( employeeDTO.getFullName() );
+                employee.setBirthYear(employeeDTO.getBirthYear());
+                employee.setFirstPhone(employeeDTO.getFirstPhone());
+                employee.setSecondPhone(employeeDTO.getSecondPhone());
+                employee.setCreatedAt(employeeDTO.getCreatedAt());
+
+                return employee;
             }
 
             @Override
             public List<EmployeeDTO> toDtoList(List<Employee> employeeList) {
-                return null;
+                if ( employeeList == null ) {
+                    return null;
+                }
+
+                List<EmployeeDTO> list = new ArrayList<EmployeeDTO>( employeeList.size() );
+                for ( Employee employee : employeeList ) {
+                    list.add( toDto( employee ) );
+                }
+
+                return list;
             }
 
             @Override
             public List<Employee> toModelList(List<EmployeeDTO> employeeDTOList) {
-                return null;
+                if ( employeeDTOList == null ) {
+                    return null;
+                }
+
+                List<Employee> list = new ArrayList<Employee>( employeeDTOList.size() );
+                for ( EmployeeDTO employeeDTO : employeeDTOList ) {
+                    list.add( toModel( employeeDTO ) );
+                }
+
+                return list;
             }
         };
     }
+
 
     @Autowired
     private UserService userService;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         AuthenticationManagerBuilder builder =
                 httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);

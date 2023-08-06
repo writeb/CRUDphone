@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(
         entityManagerFactoryRef = "entityManagerFactoryEmployee",
+        transactionManagerRef = "transactionManagerEmployee",
         basePackages = {
                 "com.example.demo.repositorySecond"
         }
