@@ -2,8 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.modelFirst.User;
 import com.example.demo.repositoryFirst.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +58,10 @@ public class AdminService {
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public Page<UserDTO> getUsersByLimitOffset(Pageable pageable){
+        Page<User> users = userRepository.findAll(pageable);
+        return users.map(userMapper::toDto);
     }
 }

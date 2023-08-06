@@ -3,6 +3,9 @@ package com.example.demo.api;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,5 +40,12 @@ public class UserRestController {
     @DeleteMapping(value = "{id}")
     public void deleteUser(@PathVariable(name = "id") Long id){
         adminService.deleteUser(id);
+    }
+
+    @GetMapping(value = "{limit}/{offset}")
+    public Page<UserDTO> getUsersByLimitOffset(@PathVariable(name = "limit") int limit,
+                                              @PathVariable(name = "offset") int offset){
+        Pageable pageable = PageRequest.of(offset, limit);
+        return adminService.getUsersByLimitOffset(pageable);
     }
 }

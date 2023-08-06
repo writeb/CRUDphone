@@ -3,7 +3,6 @@ package com.example.demo.modelSecond;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "employees")
@@ -11,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 public class Employee {
     @Id
-    private ObjectId id;
+    private String id;
 
     private String fullName;
 

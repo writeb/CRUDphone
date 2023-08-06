@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.dto.EmployeeDTO;
 import com.example.demo.mapper.EmployeeMapper;
+import com.example.demo.modelSecond.Employee;
 import com.example.demo.repositorySecond.EmployeeRepository;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +36,11 @@ public class EmployeeService {
         return employeeMapper.toDtoList(employeeRepository.findAll());
     }
 
-    public EmployeeDTO getEmployeeById(ObjectId id){
+    public EmployeeDTO getEmployeeById(String id){
         return employeeMapper.toDto(employeeRepository.findEmployeeById(id));
     }
 
-    public EmployeeDTO updateEmployee(ObjectId id, EmployeeDTO employeeDTO){
+    public EmployeeDTO updateEmployee(String id, EmployeeDTO employeeDTO){
         EmployeeDTO oldEmployeeDTO = employeeMapper.toDto(employeeRepository.findById(id).orElse(null));
         if (oldEmployeeDTO!=null){
             oldEmployeeDTO.setEmail(employeeDTO.getEmail());
@@ -53,8 +55,13 @@ public class EmployeeService {
         return null;
     }
 
-    public void deleteEmployee(ObjectId id){
+    public void deleteEmployee(String id){
         employeeRepository.deleteById(id);
+    }
+
+    public Page<EmployeeDTO> getEmployeesByLimitOffset(Pageable pageable){
+        Page<Employee> employees = employeeRepository.findAll(pageable);
+        return employees.map(employeeMapper::toDto);
     }
 
 }
