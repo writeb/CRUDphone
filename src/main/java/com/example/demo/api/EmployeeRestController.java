@@ -1,13 +1,9 @@
 package com.example.demo.api;
 
 import com.example.demo.dto.EmployeeDTO;
-import com.example.demo.modelSecond.Employee;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +20,23 @@ public class EmployeeRestController {
     }
 
     @PostMapping
-    public Employee addEmployee(Employee employeeDTO){
-        return employeeService.addEmployeeWithoutDTO(employeeDTO);
+    public EmployeeDTO addEmployee(@RequestBody EmployeeDTO employeeDTO){
+        return employeeService.addEmployee(employeeDTO);
     }
+
+    @GetMapping(value = "{id}")
+    public EmployeeDTO getEmployeeById(@PathVariable(name = "id") Long id){
+        return employeeService.getEmployeeById(id);
+    }
+
+    @PutMapping(value = "{id}")
+    public EmployeeDTO updateEmployee(@PathVariable(name = "id") Long id, @RequestBody EmployeeDTO employeeDTO){
+        return employeeService.updateEmployee(id, employeeDTO);
+    }
+
+    @DeleteMapping(value = "{id}")
+    public void deleteEmployee(@PathVariable(name = "id") Long id){
+        employeeService.deleteEmployee(id);
+    }
+
 }

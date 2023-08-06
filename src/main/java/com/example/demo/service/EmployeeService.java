@@ -2,7 +2,6 @@ package com.example.demo.service;
 
 import com.example.demo.dto.EmployeeDTO;
 import com.example.demo.mapper.EmployeeMapper;
-import com.example.demo.modelSecond.Employee;
 import com.example.demo.repositorySecond.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,17 +32,31 @@ public class EmployeeService {
         return null;
     }
 
-    public Employee addEmployeeWithoutDTO(Employee employee){
-        if (employeeRepository.findByEmail(employee.getEmail()) == null) {
-//            employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-            employee.setCreatedAt(Timestamp.from(Instant.now()));
-            return employeeRepository.save(employee);
+    public List<EmployeeDTO> getEmployees(){
+        return employeeMapper.toDtoList(employeeRepository.findAll());
+    }
+
+    public EmployeeDTO getEmployeeById(Long id){
+        return employeeMapper.toDto(employeeRepository.findEmployeeById(id));
+    }
+
+    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO){
+        EmployeeDTO oldEmployeeDTO = employeeMapper.toDto(employeeRepository.findById(id).orElse(null));
+        if (oldEmployeeDTO!=null){
+            oldEmployeeDTO.setEmail(employeeDTO.getEmail());
+            oldEmployeeDTO.setFullName(employeeDTO.getFullName());
+            oldEmployeeDTO.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
+            oldEmployeeDTO.setBirthYear(employeeDTO.getBirthYear());
+            oldEmployeeDTO.setFirstPhone(employeeDTO.getFirstPhone());
+            oldEmployeeDTO.setSecondPhone(employeeDTO.getSecondPhone());
+            oldEmployeeDTO.setCreatedAt(oldEmployeeDTO.getCreatedAt());
+            return employeeMapper.toDto(employeeRepository.save(employeeMapper.toModel(oldEmployeeDTO)));
         }
         return null;
     }
 
-
-    public List<EmployeeDTO> getEmployees(){
-        return employeeMapper.toDtoList(employeeRepository.findAll());
+    public void deleteEmployee(Long id){
+        employeeRepository.deleteById(id);
     }
+
 }

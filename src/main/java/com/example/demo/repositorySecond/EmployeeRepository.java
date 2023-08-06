@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findByEmail(String email);
     Employee findEmployeeById(Long id);
+
+//    @Query("select emp from Employee emp")
+//    List<Employee> getEmployeesByLimitOffset(Filt);
 }
