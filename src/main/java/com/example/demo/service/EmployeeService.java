@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,6 +28,7 @@ public class EmployeeService {
     public EmployeeDTO addEmployee(EmployeeDTO employeeDTO) {
         if (employeeRepository.findByEmail(employeeDTO.getEmail()) == null) {
             employeeDTO.setPassword(passwordEncoder.encode(employeeDTO.getPassword()));
+            employeeDTO.setCreatedAt(LocalDate.now());
             return employeeMapper.toDto(employeeRepository.save(employeeMapper.toModel(employeeDTO)));
         }
         return null;

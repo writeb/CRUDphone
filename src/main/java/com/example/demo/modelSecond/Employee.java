@@ -5,7 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "employees")
+import java.time.LocalDate;
+
+@Document(collection = "employee")
 @Getter
 @Setter
 public class Employee {
@@ -18,12 +20,12 @@ public class Employee {
 
     private String password;
 
-    private String birthYear;
+    private LocalDate birthYear;
 
     private String firstPhone;
 
     private String secondPhone;
 
-    private String createdAt;
+    private LocalDate createdAt;
 }
 
