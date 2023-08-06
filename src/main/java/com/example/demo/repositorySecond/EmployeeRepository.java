@@ -1,14 +1,15 @@
 package com.example.demo.repositorySecond;
 
 import com.example.demo.modelSecond.Employee;
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    Employee findByEmail(String email);
-    Employee findEmployeeById(Long id);
+public interface EmployeeRepository extends MongoRepository<Employee, ObjectId> {
 
-//    @Query("select emp from Employee emp")
-//    List<Employee> getEmployeesByLimitOffset(Filt);
+    Employee findByEmail(String email);
+    Employee findEmployeeById(ObjectId id);
+
 }
