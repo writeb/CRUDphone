@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -27,8 +25,11 @@ public class AdminService {
 
     public UserDTO addUser(UserDTO user){
         if (userRepository.findByEmail(user.getEmail()) == null){
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setCreatedAt(Timestamp.from(Instant.now()));
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            // you need to comment passwordEncoder for password for test,
+            // because it generates encoded password permanently
+            // also same to createdAt property
+//            user.setCreatedAt(Timestamp.from(Instant.now()));
             return userMapper.toDto(userRepository.save(userMapper.toModel(user)));
         }
         return null;
