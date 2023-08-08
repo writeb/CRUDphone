@@ -1,4 +1,4 @@
-create table t_users(
+create table users(
     id SERIAL PRIMARY KEY,
     birth_year date,
     created_at timestamp,

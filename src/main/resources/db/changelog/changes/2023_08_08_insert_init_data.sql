@@ -1,4 +1,4 @@
-INSERT INTO t_users(
+INSERT INTO users(
     birth_year,
     created_at,
     email,
@@ -22,6 +22,15 @@ VALUES
         'assylan@gmail.com',
         '87762413701',
         'Assylan Sovetov',
+        '$2a$10$refgTJlJcJgaJdH1MIC0JeSgfsdHhPDBt.EYySyxkLQS22rrA/Tl1JYasdm',
+        '87066551458'
+    ),
+    (
+        '2004-05-14',
+        '2023-08-08 00:00:00',
+        'sazhar@gmail.com',
+        '87762413701',
+        'Sanzhar Nadyrkhanov',
         '$2a$10$refgTJlJcJgaJdH1MIC0JeSgfsdHhPDBt.EYySyxkLQS22rrA/Tl1JYasdm',
         '87066551458'
     ),
