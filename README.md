@@ -1,7 +1,7 @@
 # CRUDphone
 With 2 databases
 
-Проект (шифровка пароля, Spring Security)
+В проекте также есть (шифровка пароля, Spring Security)
 
 1. Запуск программы
    1.1 Скачиваем 'docker-compose.yml' файл
